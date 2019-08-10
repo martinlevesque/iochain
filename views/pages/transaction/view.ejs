@@ -1,0 +1,51 @@
+<div id="listTransactions" v-cloak>
+  <div class="container">
+    <h1>Transaction <%- transaction.id %></h1>
+    <p><a href="/transaction/list"><< Transactions</a></p>
+    <hr />
+
+    <div class="row">
+        <div class="col-6">
+          <label><strong>ID: </strong></label>
+          <span><%- transaction.id %></span>
+        </div>
+        <div class="col">
+          <label><strong>Amount: </strong></label> <%- Transaction.value2Human(transaction) %>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+          <label><strong>Status: </strong></label> <%- transaction.status %>
+        </div>
+        <div class="col">
+          <label><strong>Number of Confirmations: </strong></label> <a href="https://blockchain.info/tx/<%- transaction.hash %>">View on blockchain.info</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+          <label><strong>Type: </strong></label> <%- Transaction.type2Human(transaction) %>
+        </div>
+        <div class="col">
+
+        </div>
+    </div>
+
+    <div class="row">
+      <label><strong>Details</strong></label>
+
+    </div>
+
+      <div class="row">
+        <a href="https://blockchain.info/tx/<%- transaction.hash %>">View updated details on blockchain.info</a></div>
+
+    <div class="row">
+<pre>
+<%- transaction.details ? JSON.stringify(transaction.details, null, 4) : '' %>
+</pre>
+    </div>
+</div>
+
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>

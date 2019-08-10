@@ -1,0 +1,48 @@
+
+  <div class="container">
+    <h1><%- title %></h1>
+    <hr/>
+    <div class="row mb-3">
+      <div class="col-sm-6">
+        <h4></h4>
+      </div>
+    </div>
+    <div class="row">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <% for (let field of fields) { %>
+              <th><%- field %></th>
+            <% } %>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (const elem of list) { %>
+            <tr>
+              <% for (let field of fields) { %>
+                <th>
+                  <% if (['createdAt', 'updatedAt'].includes(field)) { %>
+                    <%- new Date(elem[field]) %>
+                  <% } else { %>
+                    <%- elem[field] %>
+                  <% } %>
+                </th>
+              <% } %>
+              <td>
+                <ul>
+                  <li><a href="/superAdmin/<%- objType %>/view?id=<%- elem.id %>">View</a></li>
+                  <li><a href="/superAdmin/<%- objType %>/edit?id=<%- elem.id %>">Edit</a></li>
+                </ul>
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+
+      <hr/>
+
+    </div>
+
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>

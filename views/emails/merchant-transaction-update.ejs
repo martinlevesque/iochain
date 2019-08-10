@@ -1,0 +1,24 @@
+<% /* Note: This is injected into `views/layouts/layout-email.ejs` */ %>
+<div style="padding: 25px; margin-top:10px; background-color: #14acc2; border-top-left-radius: 6px; border-top-right-radius: 6px; border: 1px solid #0c8da0;">
+  <h2 style="text-align: center; color: #ffffff; margin:0px; font-size: 34px;">Transaction Update</h2>
+</div>
+<div style="background-color: #ffffff; padding: 25px; margin-bottom: 25px; color: #303030; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; border: 1px solid #cccccc;">
+  <p style="margin-bottom: 35px;">Dear <%= merchant.fullName %>,</p>
+  <p></p>
+
+  <p>A transaction has been updated. See the details below.</p>
+
+  <p></p>
+  <p><strong>Hash: </strong> <%- transaction.hash %></p>
+  <p><strong>ID: </strong> <%- transaction.id %></p>
+  <p><strong>Type: </strong> <%- Transaction.type2Human(transaction) %></p>
+  <p><strong>Amount: </strong> <%- Transaction.value2Human(transaction) %></p>
+  <p><strong>Status: </strong> <%- transaction.status %></p>
+  <p><strong>Query Params: </strong> <%- JSON.stringify(invoice.params) %></p>
+
+  <p>
+    <a style="color: #14acc2" href="<%= url.resolve(sails.config.custom.baseUrl, `/transaction/view/${transaction.id}`) %>">
+      View Transaction
+    </a>
+  </p>
+</div>

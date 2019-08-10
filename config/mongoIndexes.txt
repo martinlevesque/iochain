@@ -1,0 +1,25 @@
+
+db.application.createIndex( { createdAt: -1 } )
+db.application.createIndex( { updatedAt: -1 } )
+db.application.createIndex( { user: -1 } )
+
+db.history.createIndex( { createdAt: -1 } )
+db.history.createIndex( { updatedAt: -1 } )
+
+db.notification.createIndex( { createdAt: -1 } )
+db.notification.createIndex( { updatedAt: -1 } )
+
+db.order.createIndex( { createdAt: -1 } )
+db.order.createIndex( { updatedAt: -1 } )
+
+db.payoutaccount.createIndex( { createdAt: -1 } )
+db.payoutaccount.createIndex( { updatedAt: -1 } )
+
+db.transaction.createIndex( { createdAt: -1 } )
+db.transaction.createIndex( { updatedAt: -1 } )
+
+db.user.createIndex( { createdAt: -1 } )
+db.user.createIndex( { updatedAt: -1 } )
+
+db.wallet.createIndex( { createdAt: -1 } )
+db.wallet.createIndex( { updatedAt: -1 } )

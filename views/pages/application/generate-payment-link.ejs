@@ -1,0 +1,83 @@
+<div id="generate-payment-link" v-cloak>
+  <div class="container">
+    <h1>Generate a payment link</h1>
+    <hr/>
+
+    <h3>Product Information</h3>
+    <hr />
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="amount">Amount</label>
+          <input class="form-control" id="amount" name="amount" type="number" step="0.000000000001"
+            v-model="formData.amount" placeholder="" @change="updLink" />
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="currency">Currency</label>
+
+          <select class="form-control" id="currency" name="currency" @change="updLink" v-model="formData.currency">
+            <option value="USD">USD</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <h3>Custom Parameters (optional)</h3>
+    <hr />
+    <div class="row">
+      <p>
+        Custom parameters are used to identify clients (users) in order to associated transactions to them, basically to add metadata on cryptocurrency payments.
+        For example, let's say you want to associate transactions to clients with a single variable: userId. </p>
+      <p>
+        Let's say you have two users ordering products, userId=1 and userId=2 in your web store.
+        When the client with userId=1 hits the link, it will create a specific invoice for that client.
+        And when the client with userId=2 hits the link it will have another distinct invoice.
+        When the payment is processed, we know which user bought which specific item.
+      </p>
+      <p>Click the view link and change the values in order to see what happen.</p>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <a class="btn btn-primary pull-right" @click="addVariable">Add</a>
+      </div>
+    </div>
+
+    <div class="row" v-for="variable in formData.variables">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>Name</label>
+          <input class="form-control" type="text"
+            v-model="variable.name" placeholder="" @change="updLink" />
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>Value</label>
+          <input class="form-control" type="text"
+            v-model="variable.value" placeholder="" @change="updLink" />
+        </div>
+      </div>
+    </div>
+
+    <h3>Generated Link</h3>
+    <hr />
+    <div class="row">
+      <div class="col-12">
+        <p>Copy and paste the link below on your website. The amount and custom parameters can be modified dynamically.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label for="link"><a :href="formData.link">View</a></label>
+          <input class="form-control" readonly id="link" name="link" type="url" v-model="formData.link"
+            placeholder="" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>

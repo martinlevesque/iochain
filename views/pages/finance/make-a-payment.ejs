@@ -1,0 +1,85 @@
+
+<div id="make-a-payment" v-cloak>
+  <div class="container">
+    <h1>Make A Payment</h1>
+    <hr/>
+
+    <div class="row">
+      <p>
+        Payments can be done smoothly either using Paypal or ioChain. No hidden fees. No subscription.
+      </p>
+    </div>
+
+		<div class="row">
+
+
+      <div class="col-2"></div>
+      <div class="col-4 ">
+        <a href="#" @click="selectGateway('paypal')">Paypal
+  				<img style="width: 32px;" src="/images/paypal.png" alt="Paypal logo" />
+  			</a>
+      </div>
+
+      <div class="col-4" style="text-align: center;">
+        <a href="#" @click="selectGateway('iochain')">ioChain
+  				<img style="width: 32px;" src="/images/bitcoin.png" alt="Cryptocurrency" />
+  			</a>
+      </div>
+		</div>
+
+      <hr />
+
+    <div class="row" style="text-align: center;">
+      <div class="col-12">
+        <div v-if="isPaypal">
+    			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+    				<input type="hidden" name="cmd" value="_s-xclick" />
+    				<input type="hidden" name="hosted_button_id" value="8K3RWH48F7ECE" />
+    				<input type="hidden" name="on0" value="Plan" />
+    				<input type="hidden" name="currency_code" value="USD" />
+    				<input type="hidden" name="custom" value="<%- me.id %>">
+
+    				<div class="row">
+    		      <div class="col-12">
+    						<select name="os0" class="form-group">
+    							<option value="Basic">Basic $0.25 USD</option>
+    							<option value="Standard">Standard $2.00 USD</option>
+    							<option value="Pro">Pro $15.00 USD</option>
+    						</select>
+    		      </div>
+    				</div>
+
+    				<div class="row">
+    					<div class="col-12">
+    						<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+    						<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+    					</div>
+    				</div>
+    			</form>
+        </div>
+
+    		<div v-if="isIochain">
+    			<div class="row">
+    				<div class="col-12">
+    					<select v-model="planAmount" class="form-group">
+    						<option value="0.25">Basic $0.25 USD</option>
+    						<option value="2.00">Standard $2.00 USD</option>
+    						<option value="15.00">Pro $15.00 USD</option>
+    					</select>
+    				</div>
+    			</div>
+
+    			<div class="row">
+            <div class="col-12">
+      				<button class="btn btn-primary" @click="processIochain()">
+                Buy
+      				</button>
+            </div>
+    			</div>
+    		</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>

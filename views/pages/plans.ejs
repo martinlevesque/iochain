@@ -1,0 +1,76 @@
+<div id="plans">
+  <div class="container">
+
+    <h1>Our Plans</h1>
+
+    <div class="row no-gutters my-3">
+      <% for (const plan of plans) { %>
+        <div class="col-md-4 pr-2">
+            <div class="list-group text-center my-3">
+                <div class="list-group-item text-white bg-dark">
+                    <h4 class="text-center my-1"><%- plan.title %>
+                      <% if (me && me.activePlan === plan.id) { %>
+                        <strong>(Active)</strong>
+                      <% } %>
+                    </h4>
+                </div>
+                <div class="list-group-item text-uppercase font-weight-bold">
+                  <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                      <%- plan.pricePerMonth === 0.0 ? 'Free' : `$${plan.pricePerMonth.toFixed(2)}/Month` %>
+                    </div>
+                    <div class="col-4">
+                      <% if (me && me.activePlan !== plan.id && me.balance >= plan.pricePerMonth) { %>
+                        <a method="PUT" href="/finance/activate?plan=<%- plan.id %>" class="btn btn-secondary">Activate</a>
+                      <% } %>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-group-item">
+                    <strong>Transaction Fees*:</strong> $0
+                </div>
+                <div class="list-group-item">
+                    <strong>Transactions/Month**:</strong> <%- plan.limitTransactionsPerMonth %>
+                </div>
+
+                <div class="list-group-item">
+                  <strong>Number Apps/Websites:</strong> <%- plan.limitNbApps > 1000 ? '&infin; Unlimited' : plan.limitNbApps %>
+                </div>
+                <div class="list-group-item">
+                  <strong>Dashboard Administration:</strong> <i class="fa fa-check" aria-hidden="true"></i>
+                </div>
+                <div class="list-group-item">
+                  <strong>Support:</strong> <i class="fa fa-check" aria-hidden="true"></i>
+                </div>
+                <div class="list-group-item">
+                  <%- partial('./plan-signup-btn') %>
+                </div>
+            </div>
+        </div>
+      <% } %>
+
+      <div class="col-md-4 pr-2">
+          <div class="list-group text-center my-3">
+              <div class="list-group-item text-white bg-dark">
+                  <h4 class="text-center my-1">On Demand</h4>
+              </div>
+              <div class="list-group-item">
+                  $0.03 / Transaction exceeding your plan's limit
+              </div>
+
+          </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="container-fluid">
+        <div class="alert alert-secondary mt-2" role="alert">
+          * We do not add any transaction fee on the top of the networks fees. There are always fees which are based on the cryptocurrency network.<br />
+          ** If you exceed this limit, the On Demand price will be applied for every transaction exceeding the limit.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>

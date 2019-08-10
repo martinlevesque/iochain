@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%- typeof title !== 'undefined' ? `${title} > ` : '' %>ioChain > Accept Cryptocurrency Payments</title>
+
+    <% /* Viewport tag for sensible mobile support */ %>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <% /* Script tags should normally be included further down the page- but scripts
+    that load fonts are a special exception to the rule.  (We include them up here
+    above the «body» to prevent the page flickering when fonts load.)  */ %>
+    <!-- Font Awesome -->
+    <script src="https://use.fontawesome.com/96cbd61ead.js"></script>
+    <script>var gSockIo = null;</script>
+
+    <% /*
+        Stylesheets
+        ========================
+
+        Stylesheets can be hard-coded as `<link>` tags, automatically injected
+        by the asset pipeline between "STYLES" and "STYLES END", or both.
+        (https://sailsjs.com/docs/concepts/assets/task-automation)
+    */ %>
+
+    <% /* Auto-injected <link> tags: */ %>
+    <!--STYLES-->
+    <link rel="stylesheet" href="/dependencies/bootstrap-4/bootstrap-grid.css">
+    <link rel="stylesheet" href="/dependencies/bootstrap-4/bootstrap-reboot.css">
+    <link rel="stylesheet" href="/dependencies/bootstrap-4/bootstrap.css">
+    <link rel="stylesheet" href="/styles/importer.css">
+    <!--STYLES END-->
+
+    <!-- Global site tag (gtag.js) - Google AdWords: 860952307 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-860952307"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'AW-860952307');
+    </script>
+
+  </head>
+
+  <body>
+
+  <%- partial('./tracking') %>
+
+    <div id="page-wrap">
+      <header id="page-header" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between">
+        <a class="navbar-brand mr-0" href="/"><img src="/images/iochain.png" alt="ioChain" /></a>
+        <div class="navbar-nav flex-row">
+          <!-- LOGGED-IN NAVIGATION -->
+          <% if(me) { %>
+          <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/contact">Help</a>
+
+            <% if (me.isSuperAdmin) { %>
+              <div class="nav-item dropdown d-none d-sm-block">
+                <a class="nav-link dropdown-toggle" id="header-apps-menu-link" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">Administration</a>
+                <div class="dropdown-menu" aria-labelledby="header-apps-menu-link">
+                  <a class="dropdown-item" href="/superAdmin/notification/list">Notifications</a>
+                  <a class="dropdown-item" href="/superAdmin/user/list">Users</a>
+                  <a class="dropdown-item" href="/superAdmin/invoice/list">Invoices</a>
+                  <a class="dropdown-item" href="/superAdmin/payoutAccount/list">Payout Accounts</a>
+                </div>
+              </div>
+            <% } %>
+
+          <a class="nav-item nav-link ml-2 mr-2 d-block d-sm-none" href="/application/list">Applications</a>
+
+          <!-- Only in desktop nav -->
+          <div class="nav-item dropdown d-none d-sm-block">
+            <a class="nav-link dropdown-toggle" id="header-apps-menu-link" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">My Applications</a>
+            <div class="dropdown-menu" aria-labelledby="header-apps-menu-link">
+              <a class="dropdown-item" href="/application/list">Manage</a>
+              <a class="dropdown-item" href="/transaction/list">Transactions</a>
+            </div>
+          </div>
+
+          <a class="nav-item nav-link ml-2 mr-2 d-block d-sm-none" href="/finance/my-finance">Finance</a>
+
+          <div class="nav-item dropdown d-none d-sm-block">
+            <a class="nav-link dropdown-toggle" id="header-finance-menu-link" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">Finance</a>
+            <div class="dropdown-menu" aria-labelledby="header-finance-menu-link">
+              <a class="dropdown-item" href="/finance/my-finance">My Finance</a>
+              <a class="dropdown-item" href="/finance/make-a-payment">Make A Payment</a>
+              <a class="dropdown-item" href="/plans">Plans</a>
+            </div>
+          </div>
+
+          <a class="nav-item nav-link ml-2 mr-2 d-block d-sm-none" href="/account">Settings</a>
+
+          <div class="nav-item dropdown d-none d-sm-block">
+            <a class="nav-link dropdown-toggle" id="header-account-menu-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Settings</a>
+            <div class="dropdown-menu account-menu" aria-labelledby="header-account-menu-link">
+              <a class="dropdown-item" href="/account">General</a>
+              <a class="dropdown-item" href="/account/payout">My Wallets</a>
+              <a class="dropdown-item" href="/account/notifications">Notifications</a>
+            </div>
+          </div>
+
+          <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/logout">Sign Out</a>
+
+
+          <% } else { %>
+          <!-- LOGGED-OUT NAVIGATION -->
+          <a class="nav-item nav-link ml-2 ml-md-0 mr-2" href="/plans">Pricing</a>
+          <a class="nav-item nav-link ml-2 ml-md-0 mr-2" href="/contact">Contact</a>
+          <a class="nav-item nav-link ml-2 ml-md-0 mr-2" href="/login">Log in</a>
+          <!-- Only in desktop nav -->
+          <div class="form-inline d-none ml-2 d-md-block" >
+            <a class="btn btn-outline-info" href="/signup">Sign up</a>
+          </div>
+          <!-- Only in mobile nav -->
+          <a class="nav-item nav-link text-info ml-2 d-block d-md-none" href="/signup">Sign up</a>
+          <% } %>
+        </div>
+      </header>
+
+      <!--
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-8">
+          </div>
+          <div class="col">
+            <div class="pull-right" id="globalStats">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    -->
+
+      <!-- Alert if email has not been confirmed -->
+      <% if (me && (typeof menu) !== 'undefined') { %>
+        <%- partial(`./breadcrumb/${menu}`) %>
+      <% } %>
+
+      <% if(me && me.emailChangeCandidate) { %>
+      <div class="container-fluid">
+        <div class="alert alert-secondary mt-2" role="alert">
+        Your updated email address needs verification. Until you click the link sent to <strong><%= me.emailChangeCandidate %></strong>, you'll still need to sign in as <strong><%= me.emailAddress %></strong>.
+        </div>
+      </div>
+      <% } else if(me&&me.emailStatus === 'unconfirmed') { %>
+      <div class="container-fluid">
+        <div class="alert alert-secondary mt-2" role="alert">
+        Your email address still needs verification. Your account access may be limited until you click the link sent to <strong><%= me.emailChangeCandidate ? me.emailChangeCandidate : me.emailAddress%></strong>.
+        </div>
+      </div>
+      <% } %>
+
+      <% let allFlashes = flash.all() %>
+      <% for (const msgType of Object.keys(allFlashes)) { %>
+        <% for (const msg of allFlashes[msgType]) { %>
+          <div class="container-fluid">
+            <div class="alert alert-<%- msgType %> mt-2" role="alert">
+              <%- msg %>
+            </div>
+          </div>
+        <% } %>
+      <% } %>
+
+      <%- body %>
+
+      <footer id="page-footer" class="navbar navbar-light justify-content-between flex-row-reverse">
+        <div class="nav">
+          <small class="nav-item"><a class="nav-link text-info" href="/contact">Contact us</a></small>
+          <small class="nav-item"><a class="nav-link text-info" href="/faq">FAQ</a></small>
+          <small class="nav-item"><a class="nav-link text-info" href="/legal/terms">Terms of Use</a></small>
+          <small class="nav-item"><a class="nav-link text-info" href="/legal/privacy">Privacy policy</a></small>
+          <% if(me) { %>
+          <small class="nav-item"><a class="nav-link text-info" href="/logout">Sign out</a></small>
+          <% } %>
+        </div>
+        <small class="copy">Copyright &copy; 2018 ioChain. <br class="xs-only"/>All rights reserved.</small>
+      </footer>
+    </div>
+
+
+    <% /*
+      Client-side JavaScript
+      ========================
+
+      Scripts can be hard-coded as <script> tags, automatically injected
+      by the asset pipeline between "SCRIPTS" and "SCRIPTS END", or both.
+      (https://sailsjs.com/docs/concepts/assets/task-automation)
+    */ %>
+
+    <% /* Load Stripe Checkout */ %>
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+
+    <% /* Delete the global `self` to help avoid client-side bugs.
+    (see https://developer.mozilla.org/en-US/docs/Web/API/Window/self) */ %>
+    <script>delete window.self;</script>
+
+    <% /* Auto-injected <script> tags: */ %>
+    <!--SCRIPTS-->
+    <script src="/dependencies/sails.io.js"></script>
+    <script src="/dependencies/lodash.js"></script>
+    <script src="/dependencies/jquery.min.js"></script>
+    <script src="/dependencies/vue.js"></script>
+    <script src="/dependencies/bootstrap-4/popper.js"></script>
+    <script src="/dependencies/bootstrap-4/bootstrap.js"></script>
+    <script src="/dependencies/cloud.js"></script>
+    <script src="/dependencies/parasails.js"></script>
+    <script src="/js/cloud.setup.js"></script>
+    <script src="/js/components/ajax-button.component.js"></script>
+    <script src="/js/components/ajax-form.component.js"></script>
+    <script src="/js/components/modal.component.js"></script>
+    <script src="/js/utilities/is-valid-email-address.js"></script>
+    <script src="/js/utilities/open-stripe-checkout.js"></script>
+    <script src="/js/pages/498.page.js"></script>
+    <script src="/js/pages/account/account-overview.page.js"></script>
+    <script src="/js/pages/account/change-password.page.js"></script>
+    <script src="/js/pages/account/edit-profile.page.js"></script>
+    <script src="/js/pages/account/notifications.page.js"></script>
+    <script src="/js/pages/account/payout.page.js"></script>
+    <script src="/js/pages/application/generate-payment-link.page.js"></script>
+    <script src="/js/pages/application/list-transactions.page.js"></script>
+    <script src="/js/pages/contact.page.js"></script>
+    <script src="/js/pages/dashboard/welcome.page.js"></script>
+    <script src="/js/pages/entrance/confirmed-email.page.js"></script>
+    <script src="/js/pages/entrance/forgot-password.page.js"></script>
+    <script src="/js/pages/entrance/login.page.js"></script>
+    <script src="/js/pages/entrance/new-password.page.js"></script>
+    <script src="/js/pages/entrance/signup.page.js"></script>
+    <script src="/js/pages/faq.page.js"></script>
+    <script src="/js/pages/finance/make-a-payment.page.js"></script>
+    <script src="/js/pages/homepage.page.js"></script>
+    <script src="/js/pages/legal/privacy.page.js"></script>
+    <script src="/js/pages/legal/terms.page.js"></script>
+    <script src="/js/pages/transaction/invoice.page.js"></script>
+    <script src="/js/pages/transaction/list.page.js"></script>
+    <!--SCRIPTS END-->
+
+    <script type="text/javascript">
+    io.sails.autoConnect = false;
+    </script>
+
+    <script type="text/javascript">
+    function updStats(st) {
+      // document.getElementById('globalStats').innerHTML = "BTC/USD: " + st.btc2Usd;
+    }
+
+    gSockIo = io.sails.connect();
+    gSockIo = io.sails.connect();
+
+    /*
+    gSockIo.on('connect', function() {
+      gSockIo.get('/global/listenPrices', function(response) {
+        updStats(response);
+        gSockIo.on('pricesUpdate', function(response) {
+          updStats(response);
+        });
+      });
+    });
+    */
+
+    </script>
+  </body>
+</html>

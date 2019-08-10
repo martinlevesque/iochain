@@ -1,0 +1,30 @@
+<div id="my-order" >
+  <div class="container">
+    <h1>Order</h1>
+    <hr/>
+    <div class="row">
+      <div class="col-3">ID</div>
+      <div class="col"><strong>$<%- order.id %></strong></div>
+    </div>
+
+    <div class="row">
+      <div class="col-3">Amount</div>
+      <div class="col">$<%- roundTo(order.usd_amount, 2) %></div>
+    </div>
+
+    <div class="row">
+      <div class="col-3">Gateway</div>
+      <div class="col"><%- order.type %></div>
+    </div>
+
+    <div class="row">
+      <div class="col-3">Details</div>
+      <div class="col">
+<pre><%- JSON.stringify(order.content.response || {}, null, 4) %></pre></div>
+    </div>
+
+    <hr/>
+
+  </div>
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>

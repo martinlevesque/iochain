@@ -1,0 +1,74 @@
+<div id="list-transactions" v-cloak>
+  <div class="container">
+    <h1>My Applications</h1>
+    <hr/>
+    <div class="row">
+      <div class="col-12">
+        <p>
+          This section is used to manage your existing Web applications and generate payment links.
+          A payment link can be used on your website in order to start receiving payments.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <a href="/application/new" class="btn btn-primary pull-right">Create</a>
+
+      </div>
+    </div>
+    <div class="row">
+      <% if (applications.length > 0) { %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (const app of applications) { %>
+              <tr>
+                <td><%- app.name %></td>
+                <td>
+                  <ul>
+                    <li><a href="/application/edit/<%- app.id %>">Edit</a></li>
+                    <li><a href="/application/generate-payment-link/<%- app.id %>">Generate Payment Link</a></li>
+                    <li><a class="remove-button" href="#" @click="clickRemoveAppButton('<%- app.id %>')">Remove</a></li>
+                  </ul>
+                </td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <p>You don't have an application yet! <a href="/application/new">Just create one now</a>.
+        </p>
+      <% } %>
+
+      <hr/>
+
+    </div>
+</div>
+
+<modal v-if="removeAppModalVisible" @close="closeRemoveAppModal()" v-cloak>
+  <div class="modal-header">
+    <h5 class="modal-title">Remove this application?</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span>&times;</span>
+    </button>
+  </div>
+  <ajax-form action="destroy"  :cloud-error.sync="cloudError" :handle-parsing="handleParsingRemoveAppForm"
+    @submitted="submittedRemoveAppForm()">
+    <input type="hidden" name="id" value="12341234" />
+    <div class="modal-body">
+      <p>Are you sure you want to remove this application?</p>
+      <p class="text-muted"></p>
+      <p class="text-danger" v-if="cloudError"><small>An error occured while removing the application.</small></p>
+    </div>
+    <div class="modal-footer">
+      <button data-dismiss="modal" class="btn btn-outline-secondary mr-1">Nevermind</button>
+      <ajax-button type="submit" class="btn btn-danger ml-1">Remove</ajax-button>
+    </div>
+  </ajax-form>
+</modal>
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>

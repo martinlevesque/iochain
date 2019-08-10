@@ -1,0 +1,44 @@
+<div id="listTransactions" v-cloak>
+  <div class="container">
+    <h1>Transactions</h1>
+    <hr/>
+    <div class="row mb-3">
+      <div class="col-sm-6">
+        <h4></h4>
+      </div>
+    </div>
+    <div class="row">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Status</th>
+            <th>Application</th>
+            <th>Amount</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (const transaction of transactions) { %>
+            <tr>
+              <td><%- transaction.id %></td>
+              <td><%- transaction.status %></td>
+              <td><%- transaction.invoice.application.name %></td>
+              <td><%- transaction.pretty_value %> <%- Invoice.type2Human(transaction.invoice) %></td>
+              <td>
+                <ul>
+                  <li><a href="/transaction/view/<%- transaction.id %>">View</a></li>
+                </ul>
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+
+      <hr/>
+
+    </div>
+</div>
+
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>

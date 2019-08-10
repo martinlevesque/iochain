@@ -1,0 +1,31 @@
+<div id="app">
+  <div class="container">
+    <h1 class="text-center">Your App</h1>
+    <div>
+      <p class="text-center"></p>
+      <hr/>
+      <form method="POST" action="<%- action %>">
+        <input type='hidden' name='_csrf' value='<%= _csrf %>' />
+        <input type='hidden' name='id' value='<%= app.id %>' />
+
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input class="form-control" id="name" name="name" value="<%- app.name %>" type="text" placeholder="Name"
+            required autofocus />
+        </div>
+
+        <div class="form-group">
+          <label for="callback_url">Callback URL</label>
+          <p class="small"><i>When notifications occur, this URL will be notified via an HTTP POST request. See this <a href="/doc/callbackResponseFormat">doc</a> for the response format.</i></p>
+          <input class="form-control" id="callback_url" name="callbackUrl" value="<%- app.callbackUrl %>" type="url"
+            placeholder="" autofocus />
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-dark btn-lg btn-block">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>

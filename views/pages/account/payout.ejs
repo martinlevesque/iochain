@@ -1,0 +1,38 @@
+<div id="payout" v-cloak>
+  <div class="container">
+    <h1>My Wallets</h1>
+    <p>
+      Payments will be done to the following wallet(s).
+    </p>
+    <hr/>
+    <ajax-form action="updatePayoutAccounts" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
+      <div class="row" v-for="account in formData.payoutAccounts">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="full-name">{{account.prettyType}} Address</label>
+            <input class="form-control" name="formData.payoutAccounts[].address" type="text" v-model.trim="account.address"
+              placeholder="Address">
+          </div>
+        </div>
+        <div class="col-sm-6">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <p class="text-danger" v-if="cloudError === 'invalidAddress'">The provided address is invalid.</p>
+          <p class="text-danger" v-if="cloudError === 'invalidPayoutThreshold'">The provided threshold is invalid.</p>
+          <p class="text-danger" v-if="cloudError === 'invalidPayout'">The provided is invalid.</p>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group text-right">
+            <a class="btn btn-outline-info" href="/account/payout">Cancel</a>
+            <ajax-button type="submit" :syncing="syncing" class="btn btn-dark">Save changes</ajax-button>
+          </div>
+        </div>
+      </div>
+    </ajax-form>
+  </div>
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>

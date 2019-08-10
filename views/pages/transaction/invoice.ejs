@@ -1,0 +1,104 @@
+
+<div id="invoice" v-cloak>
+  <div class="container" v-if="!user">
+    invalid merchant id
+  </div>
+    <div class="container" v-if="user">
+      <h1>Payment Due to {{formData.app.name}}</h1>
+      <h2 class="text-danger" v-if="formData.status === 'archived'">
+        This Address has Expired. Do not make a transaction to that address.
+      </h2>
+      <hr/>
+      <div class="row mb-3">
+        <div class="col-sm-6">
+          <h4>Payment Details</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-5" v-if="formData.sourceAddressValid">
+          <img v-if="formData.qrCodeImgUrlPublicKey && formData.status === 'active'"
+            style="width: 230px;" :src="formData.qrCodeImgUrlPublicKey" />
+        </div>
+        <div class="col">
+          <div class="row">
+              <div class="col-6">
+                <label>Amount Due: </label>
+              </div>
+              <div class="col">
+                <h6>{{amount}} {{currency}}</h6>
+              </div>
+          </div>
+
+          <div class="row">
+            <div class="col-6">
+              <label>Payment Currency</label></div>
+            <div class="col">
+              <select class="form-control" v-model="formData.type">
+                <option value="btc">Bitcoin</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-6">
+              <label>My Wallet Address</label></div>
+            <div class="col">
+                <input class="form-control" type="text" v-model="formData.sourceAddress"
+                  v-on:change="verifyAddress()" placeholder="Enter Your Wallet Address" />
+
+                  <button v-if="!formData.sourceAddressValid" v-on:click="verifyAddress()" class="btn btn-dark">Verify</button>
+
+
+              <div class="alert alert-danger" v-if="formData.sourceAddressValid !== null && ! formData.sourceAddressValid">
+                Invalid Address.
+              </div>
+              <div class="" style="color: green" v-if="formData.sourceAddressValid !== null && formData.sourceAddressValid">
+                <strong>Valid, proceed with the payment.</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div><hr /></div>
+          </div>
+
+          <div class="row">
+            <div class="col-6">
+              <h4>Amount Due in BTC</h4></div>
+            <div class="col">
+              <h4>{{totalDue}}</h4>
+            </div>
+          </div>
+
+          <div class="row" v-if="formData.sourceAddressValid">
+            <div class="col-12">Pay To</div>
+          </div>
+
+          <div class="row" v-if="formData.sourceAddressValid">
+            <div class="col-12">
+              <strong><span v-if="formData.status === 'active'">{{publicKey}}</span> <span v-if="formData.status === 'archived'" class="text-danger">EXPIRED</span></strong>
+            </div>
+          </div>
+      </div>
+
+      <hr/>
+
+
+
+    </div>
+
+    <div style="margin-top: 100px;"></div>
+
+    <div class="row" >
+      <p></p>
+      <div class="col-12 text-center">
+        Powered by<br />
+        <a href="https://www.iochain.co/"><img src="/images/iochain.png" /></a>
+      </div>
+    </div>
+
+    </div>
+
+
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>

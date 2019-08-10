@@ -1,0 +1,75 @@
+<div id="my-finance" >
+  <div class="container">
+    <h1>My Finance</h1>
+    <hr/>
+
+    <div class="row">
+      <div class="col-12">
+        <p>Here you can make a payment in order to select upgraded plans and view your payments history.</p>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-sm-6">
+        <h4>General</h4>
+      </div>
+      <div class="col-sm-6">
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3">Balance:</div>
+      <div class="col"><strong>$<%- roundTo(me.balance, 2) %> USD</strong></div>
+    </div>
+
+    <hr />
+
+    <div class="row mb-3">
+      <div class="col-sm-6">
+        <h4>Orders</h4>
+      </div>
+      <div class="col-sm-6">
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <% if (orders.length > 0) { %>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Gateway</th>
+                <th>Amount</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for (const order of orders) { %>
+                <tr>
+                  <td><%- order.id %></td>
+                  <td><%- order.type %></td>
+                  <td>USD <%- roundTo(order.usd_amount, 2) %></td>
+                  <td>
+                    <ul>
+                      <li><a href="/finance/view/<%- order.id %>">View</a></li>
+                    </ul>
+                  </td>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+        <% } else { %>
+          <p>
+            You do not yet have any order.
+          </p>
+        <% } %>
+      </div>
+    </div>
+
+    <hr/>
+
+  </div>
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>

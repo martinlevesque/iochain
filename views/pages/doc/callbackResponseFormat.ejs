@@ -1,0 +1,43 @@
+<div>
+  <div class="container">
+    <h2>Notification Callback Response Format</h2>
+
+    <div class="row">
+      <p>Find below the format for notification response format.</p>
+
+    </div>
+
+    <div class="row">
+      <hr/>
+
+
+<pre>
+{
+    "hash": "",
+    "id": "",
+    "type": "from_client",
+    "status": "confirmed|unconfirmed",
+    "amount": "150000",                // satoshi
+    "usd_amount": "...",               // USD
+    "pretty_amount": "0.0015",         // BTC
+    "details": {},
+    "query_params": {
+        "merchantId": "5aa1dc1b79c4653c7d8d9558-5aa1dc2f79c4653c7d8d9562",
+        "amount": "0",
+        "currency": "USD",
+        ...
+    }
+}
+</pre>
+    </div>
+
+    <div class="row">
+      <ul>
+        <li><strong>query_params: </strong> The query params of the transaction.</li>
+      </ul>
+
+    </div>
+
+  </div>
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>
