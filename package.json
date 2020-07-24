@@ -27,7 +27,7 @@
     "sails-hook-grunt": "^3.0.2",
     "sails-hook-organics": "^0.14.5",
     "sails-hook-orm": "^2.0.0",
-    "sails-hook-sockets": "^1.5.2",
+    "sails-hook-sockets": "^1.5.5",
     "sails-mongo": "^1.0.1",
     "serialize-error": "^2.1.0",
     "socket.io-redis": "5.2.0",
