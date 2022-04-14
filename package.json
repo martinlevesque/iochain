@@ -5,7 +5,7 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
-    "async": "2.6.0",
+    "async": "3.2.2",
     "bitcoinjs-lib": "^3.3.2",
     "blockchain.info": "^2.11.0",
     "connect-redis": "3.3.3",
